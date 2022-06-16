@@ -73,6 +73,8 @@ const MESSAGE_CONTENT = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
+let content = [];
+
 function getRandomArrayElement(element) {
   return element[getRandomNumber(0, element.length - 1)];
 }
@@ -145,7 +147,7 @@ function verifyCommentsId() {
 }
 
 //собираем массив из 25 постов
-const content = getPostArray(25);
+content = getPostArray(25);
 //проверяем массив на одинаковые ID комментариев
 verifyCommentsId();
 
