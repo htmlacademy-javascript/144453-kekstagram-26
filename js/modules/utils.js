@@ -4,8 +4,7 @@ function getRandomNumber(min, max) {
   } else {
     return 'введите чило больше нуля';
   }
-};
-
+}
 
 
 function checkMessageLength(message, maxDuration) {
@@ -14,7 +13,7 @@ function checkMessageLength(message, maxDuration) {
   } else {
     return false;
   }
-};
+}
 
 
 function getRandomArrayElement(element) {
@@ -22,20 +21,20 @@ function getRandomArrayElement(element) {
 }
 
 
-let idArray = [];
+const idArray = [];
 
-let getRandomUniqueId = function () {
+const getRandomUniqueId = function () {
   let currentId = getRandomNumber(0, 999999);
   let validate =true;
   while (validate) {
     validate=false;
     idArray.forEach ((value,index) => {
       if (currentId === idArray[index]) {
-      currentId = getRandomNumber(0, 999999);
-      validate =true
-  }})}
+        currentId = getRandomNumber(0, 999999);
+        validate =true;
+      }});}
   idArray.push(currentId);
-  return currentId
-}
+  return currentId;
+};
 
 export {getRandomNumber, checkMessageLength, getRandomArrayElement, getRandomUniqueId};

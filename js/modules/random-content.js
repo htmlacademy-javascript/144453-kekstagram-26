@@ -1,4 +1,4 @@
-import {getRandomNumber, getRandomArrayElement, getRandomUniqueId} from "./utils.js";
+import {getRandomNumber, getRandomArrayElement, getRandomUniqueId} from './utils.js';
 
 
 const USERS_NAMES = [
@@ -56,25 +56,24 @@ const MESSAGE_CONTENT = [
 ];
 
 
-
 function getRandomCommentsArray() {
-return  Array(getRandomNumber(1, 9)).fill().map (() => ({
-  id: getRandomUniqueId(),
-  avatar: `img/avatar-${  getRandomNumber(0, 5)  }.svg`,
-  message: getRandomArrayElement(MESSAGE_CONTENT),
-  name: getRandomArrayElement(USERS_NAMES),
-}))
+  return  Array(getRandomNumber(1, 9)).fill().map (() => ({
+    id: getRandomUniqueId(),
+    avatar: `img/avatar-${  getRandomNumber(0, 5)  }.svg`,
+    message: getRandomArrayElement(MESSAGE_CONTENT),
+    name: getRandomArrayElement(USERS_NAMES),
+  }));
 }
 
 
 function getRandomComtent() {
-return Array(25).fill().map ((value,index) => ({
-  id: index+1,
-  url: `photos/${  index+1  }.jpg`,
-  description: PHOTO__DESCRIPTION[index],
-  likes: getRandomNumber(0, 1000),
-  comments: getRandomCommentsArray(),
-}))
+  return Array(25).fill().map ((value,index) => ({
+    id: index+1,
+    url: `photos/${  index+1  }.jpg`,
+    description: PHOTO__DESCRIPTION[index],
+    likes: getRandomNumber(0, 1000),
+    comments: getRandomCommentsArray(),
+  }));
 }
 
 export  {getRandomComtent};
