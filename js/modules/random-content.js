@@ -59,7 +59,7 @@ const MESSAGE_CONTENT = [
 function getRandomCommentsArray() {
   return  Array(getRandomNumber(1, 9)).fill().map (() => ({
     id: getRandomUniqueId(),
-    avatar: `img/avatar-${  getRandomNumber(0, 5)  }.svg`,
+    avatar: `img/avatar-${  getRandomNumber(1, 6)  }.svg`,
     message: getRandomArrayElement(MESSAGE_CONTENT),
     name: getRandomArrayElement(USERS_NAMES),
   }));
