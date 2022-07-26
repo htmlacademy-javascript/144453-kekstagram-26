@@ -47,13 +47,5 @@ const effectsPreset = [
   },
 ];
 
-const effectsPreset2 = {
-    effect:['chrome','sepia','marvin','phobos','heat'],
-    filter:['grayscale','sepia','invert','blur','brightness'],
-    min:[0,0,0,0,1],
-    max:[1,1,'100%','3px',3],
-    step:[0.1,0.1,'1%','0.1px',0.1],
-    format:['','','%','px','']
-  };
 
-export {effectsPreset,effectsPreset2};
+export {effectsPreset};

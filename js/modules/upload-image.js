@@ -58,5 +58,5 @@ imgUploadCancel.addEventListener ('click', () => {
 
 imageUploadForm.addEventListener ('submit', (evt) => {
   evt.preventDefault();
-  pristineValidate.validate()
+  pristineValidate.validate();
 });

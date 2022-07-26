@@ -10,7 +10,7 @@ const pristineValidate = new Pristine(imageUploadForm, {
   errorTextParent: 'img-upload__element',
   errorTextTag: 'span',
   errorTextClass: 'img-upload__error'
-}, false);;
+}, false);
 
 
 const validateHashtagsCount = function() {
@@ -22,12 +22,12 @@ const validateHashtagsCount = function() {
 const validateHashtagsContent = function() {
   const hashtagsArray = inputHashtag.value.split(' ');
   const hashtagReg = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-if (inputHashtag.value!==''){
-  const check = hashtagsArray.every ((value)=>hashtagReg.test(value));
-  return check;
-}else{
-  return true;
-}
+  if (inputHashtag.value!==''){
+    const check = hashtagsArray.every ((value)=>hashtagReg.test(value));
+    return check;
+  }else{
+    return true;
+  }
 };
 
 const validateHashtagsRepeat = function() {
@@ -52,7 +52,6 @@ const validateDescriptionContent = function() {
   const description = inputDescription.value;
   return description.length <= 140;
 };
-
 
 
 pristineValidate.addValidator(inputHashtag, validateHashtagsCount, 'нельзя указать больше пяти хэш-тегов');
