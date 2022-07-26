@@ -18,7 +18,6 @@ const addSlider = function () {
     });
     original = false;
   }
-
 };
 
 
@@ -30,14 +29,11 @@ const getSliderOptions = function (effect) {
     }
   });
   return effectsPreset[effectIndex];
-
 };
 
 
 const setSlider = function (effect) {
-
   const sliderOptions = getSliderOptions(effect);
-
   effectLevelSlider.noUiSlider.updateOptions({
     range: {
       min: sliderOptions.min,
@@ -56,18 +52,13 @@ const setSlider = function (effect) {
         return parseFloat(value);
       },
     }
-
   });
 
   effectLevelSlider.noUiSlider.on('update', () => {
     const filterName = sliderOptions.filter;
     const filterScale = effectLevelSlider.noUiSlider.get();
-
     uploadImage.style.filter = `${filterName}(${filterScale}${sliderOptions.format})`;
     effectLevel.value = filterScale;
-
-    console.log(`${filterName}(${filterScale}${sliderOptions.format})`);
-
   });
 };
 

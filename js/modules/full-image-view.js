@@ -9,11 +9,6 @@ const commentTemplate = commentsBlock.querySelector('.social__comment');
 const comments = document.createDocumentFragment();
 
 
-bigPictureCloseButton.addEventListener ('click', ()=> {
-  closeBigPcturePopup();
-});
-
-
 const onBigPctureEscKeydown = function(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -21,12 +16,15 @@ const onBigPctureEscKeydown = function(evt) {
   }
 };
 
-const closeBigPcturePopup = function() {
+function closeBigPcturePopup() {
   document.removeEventListener('keydown', onBigPctureEscKeydown);
   bigPicture.classList.add ('hidden');
   document.querySelector('body').classList.remove('modal-open');
-};
+}
 
+bigPictureCloseButton.addEventListener ('click', ()=> {
+  closeBigPcturePopup();
+});
 
 const showBigPicture = function (element, elementContent){
   element.addEventListener('click', (evt)=> {

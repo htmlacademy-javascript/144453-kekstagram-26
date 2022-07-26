@@ -23,21 +23,20 @@ const onSuccesMessageKeydown = function (evt) {
   }
 };
 
-const closeErrorMessage = function () {
+function closeErrorMessage() {
   const message = document.querySelector('.error');
   document.querySelector('body').removeChild(message);
   document.removeEventListener('keydown', onErrorMessageKeydown);
-  document.querySelector('body').removeEventListener('click', closeErrorMessage);
 
-};
 
-const closeSuccesMessage = function () {
+}
+
+function closeSuccesMessage() {
   const message = document.querySelector('.success');
   document.querySelector('body').removeChild(message);
   document.removeEventListener('keydown', onSuccesMessageKeydown);
-  document.querySelector('body').removeEventListener('click', closeSuccesMessage);
-};
 
+}
 
 const showErrorMessage = function () {
   const errorMessage = uploadErrorTemplate.cloneNode(true);
@@ -45,8 +44,8 @@ const showErrorMessage = function () {
   errorMessage.style.zIndex = 100;
   document.addEventListener('keydown', onErrorMessageKeydown);
 
-  errorMessage.querySelector('.error__button').addEventListener('click', closeErrorMessage);
-  document.querySelector('body').addEventListener('click', closeErrorMessage);
+  errorMessage.querySelector('.error__button').addEventListener('click', () => { closeErrorMessage(); });
+  document.querySelector('body').addEventListener('click', () => { closeErrorMessage(); });
   errorMessage.querySelector('.error__inner').addEventListener('click', (evt) => {
     evt.stopPropagation();
   });
@@ -60,8 +59,8 @@ const showSuccesMessage = function () {
   document.querySelector('body').classList.add('modal-open');
 
   document.addEventListener('keydown', onSuccesMessageKeydown);
-  succesMessage.querySelector('.success__button').addEventListener('click', closeSuccesMessage);
-  document.querySelector('body').addEventListener('click', closeSuccesMessage);
+  succesMessage.querySelector('.success__button').addEventListener('click', () => { closeSuccesMessage(); });
+  document.querySelector('body').addEventListener('click', () => { closeSuccesMessage(); });
   succesMessage.querySelector('.success__inner').addEventListener('click', (evt) => {
     evt.stopPropagation();
   });
