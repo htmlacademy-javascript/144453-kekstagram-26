@@ -1408,3 +1408,9 @@ main {
 .hidden {
   display: none;
 }
+
+.img-upload__error{
+  display: block;
+  margin-bottom: 20px;
+  text-transform: none;
+}

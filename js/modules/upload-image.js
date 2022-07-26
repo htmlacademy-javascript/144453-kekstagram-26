@@ -1,4 +1,5 @@
-import {isValid} from './form-validation.js';
+import {pristineValidate} from './form-validation.js';
+import {addScaleControl, removeScaleControl} from './upload-image-scale.js';
 
 const imageUploadForm = document.querySelector('#upload-select-image');
 const imageUploadPopap = imageUploadForm.querySelector('.img-upload__overlay');
@@ -6,8 +7,6 @@ const uploadFileInput = document.querySelector('#upload-file');
 const imgUploadCancel = imageUploadForm.querySelector('#upload-cancel');
 const inputHashtag = imageUploadForm.querySelector('.text__hashtags');
 const inputDescription = imageUploadForm.querySelector('.text__description');
-const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-const errorPopup = document.createDocumentFragment();
 
 const onPopupEscKeydown = function(evt) {
   if (isEscapeKey(evt)) {
@@ -24,16 +23,19 @@ function closeUploadPopup () {
   imageUploadPopap.classList.add ('hidden');
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
+  removeScaleControl();
   uploadFileInput.value ='';
   inputHashtag.value='';
   inputDescription.value='';
 
 }
 
-function showImageLoader(){
+function showUploadPopup(){
   imageUploadPopap.classList.remove ('hidden');
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', onPopupEscKeydown);
+  addScaleControl();
+
 }
 
 inputHashtag.addEventListener ('keydown', (evt) => {
@@ -46,7 +48,7 @@ inputDescription.addEventListener ('keydown', (evt) => {
 
 
 uploadFileInput.addEventListener ('change', () => {
-  showImageLoader();
+  showUploadPopup();
 });
 
 imgUploadCancel.addEventListener ('click', () => {
@@ -55,14 +57,6 @@ imgUploadCancel.addEventListener ('click', () => {
 
 
 imageUploadForm.addEventListener ('submit', (evt) => {
-
   evt.preventDefault();
-
-  if (isValid) {
-    closeUploadPopup ();
-  }else{
-    const errorMessage = errorTemplate.cloneNode(true);
-    errorPopup.appendChild(errorMessage);
-    document.querySelector('body').appendChild(errorPopup);
-  }
+  pristineValidate.validate();
 });
