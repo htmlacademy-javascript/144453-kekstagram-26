@@ -1,5 +1,7 @@
 import {getRandomComtent} from './random-content.js';
 import {showBigPicture} from './full-image-view.js';
+import {getContent} from'./get-content.js';
+
 
 const content = getRandomComtent();
 const contentPalce = document.querySelector('.pictures');

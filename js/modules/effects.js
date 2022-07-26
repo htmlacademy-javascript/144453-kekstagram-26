@@ -66,6 +66,8 @@ const setSlider = function (effect){
     uploadImage.style.filter=`${filterName}(${filterScale}${sliderOptions.format})`;
     effectLevel.value = filterScale;
 
+    console.log(`${filterName}(${filterScale}${sliderOptions.format})`);
+
   });
 };
 
