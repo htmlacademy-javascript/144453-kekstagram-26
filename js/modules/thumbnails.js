@@ -1,13 +1,14 @@
-import {getRandomComtent} from './random-content.js';
+
 import {showBigPicture} from './full-image-view.js';
-import {getContent} from'./get-content.js';
 
 
-const content = getRandomComtent();
+
 const contentPalce = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const thumbnails = document.createDocumentFragment();
 
+
+const renderThumbnails = function(content){
 for (let i=0; i<content.length; i++) {
   const thumbnail = thumbnailTemplate.cloneNode(true);
   thumbnail.querySelector('.picture__img').src=content[i].url;
@@ -19,5 +20,6 @@ for (let i=0; i<content.length; i++) {
 }
 
 contentPalce.appendChild(thumbnails);
+}
 
-
+export {renderThumbnails}

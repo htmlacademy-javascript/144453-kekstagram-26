@@ -1,5 +1,6 @@
 import {pristineValidate} from './form-validation.js';
 import {addScaleControl, removeScaleControl} from './upload-image-scale.js';
+import {isEscapeKey} from './utils.js';
 
 const imageUploadForm = document.querySelector('#upload-select-image');
 const imageUploadPopap = imageUploadForm.querySelector('.img-upload__overlay');
@@ -15,9 +16,6 @@ const onPopupEscKeydown = function(evt) {
   }
 };
 
-function isEscapeKey (evt) {
-  return evt.key === 'Escape';
-}
 
 function closeUploadPopup () {
   imageUploadPopap.classList.add ('hidden');
