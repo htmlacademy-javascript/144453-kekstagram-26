@@ -71,7 +71,7 @@ const removEffects = function () {
   uploadImage.className = '';
   uploadImage.style.filter = '';
   effectLevel.value = '';
-  if (!original){
+  if (!original) {
     effectLevelSlider.noUiSlider.destroy();
   }
   original = true;

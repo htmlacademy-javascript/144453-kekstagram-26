@@ -13,42 +13,42 @@ const pristineValidate = new Pristine(imageUploadForm, {
 }, false);
 
 
-const validateHashtagsCount = function() {
+const validateHashtagsCount = function () {
   const hashtagsArray = inputHashtag.value.split(' ');
-  return hashtagsArray.length<6;
+  return hashtagsArray.length < 6;
 };
 
 
-const validateHashtagsContent = function() {
+const validateHashtagsContent = function () {
   const hashtagsArray = inputHashtag.value.split(' ');
   const hashtagReg = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-  if (inputHashtag.value!==''){
-    const check = hashtagsArray.every ((value)=>hashtagReg.test(value));
+  if (inputHashtag.value !== '') {
+    const check = hashtagsArray.every((value) => hashtagReg.test(value));
     return check;
-  }else{
+  } else {
     return true;
   }
 };
 
-const validateHashtagsRepeat = function() {
-  const hashtags=inputHashtag.value.toLowerCase();
+const validateHashtagsRepeat = function () {
+  const hashtags = inputHashtag.value.toLowerCase();
   const hashtagsArray = hashtags.split(' ');
   let result = true;
 
-  for (let i=0; i<hashtagsArray.length;i++){
+  for (let i = 0; i < hashtagsArray.length; i++) {
     result = false;
     const checkArray = Array.from(hashtagsArray);
-    checkArray.splice(i,1);
+    checkArray.splice(i, 1);
 
     const check = checkArray.find((hashtag) => hashtag === hashtagsArray[i]);
-    if (check !== undefined) {break;}
-    result=true;
+    if (check !== undefined) { break; }
+    result = true;
   }
   return result;
 };
 
 
-const validateDescriptionContent = function() {
+const validateDescriptionContent = function () {
   const description = inputDescription.value;
   return description.length <= 140;
 };
@@ -60,4 +60,4 @@ pristineValidate.addValidator(inputHashtag, validateHashtagsRepeat, 'один и
 pristineValidate.addValidator(inputDescription, validateDescriptionContent, 'максимальная длина комментария 140 символов');
 
 
-export {pristineValidate};
+export { pristineValidate };

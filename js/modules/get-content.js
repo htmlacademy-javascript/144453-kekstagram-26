@@ -1,5 +1,8 @@
-import { renderThumbnails } from './thumbnails.js';
+import { renderThumbnailsSortDefault, renderThumbnailsSortRandom, renderThumbnailsSortDiscusse } from './thumbnails.js';
+import { showFilters, setDefaultSort, setRandomSort, setDiscusstSort } from './filters.js';
+import { debounce } from './utils.js';
 
+const RERENDER_DELAY = 500;
 const contentPalce = document.querySelector('.pictures');
 
 const showServerError = function (error) {
@@ -11,16 +14,28 @@ const showServerError = function (error) {
   contentPalce.appendChild(fragment);
 };
 
-fetch('https://26.javascript.pages.academy/kekstagram/data')
-  .then((response) => {
-    if (response.ok) {
-      return response;
-    }
-    throw new Error(`${response.status} — ${response.statusText}`);
-  })
-  .then((response) => response.json())
-  .then((posts) => {
-    renderThumbnails(posts);
-  })
-  .catch((error) => { showServerError(error); });
+
+const getData = function (onSuccess) {
+  fetch('https://26.javascript.pages.academy/kekstagram/data')
+    .then((response) => {
+      if (response.ok) {
+        return response;
+      }
+      throw new Error(`${response.status} — ${response.statusText}`);
+    })
+    .then((response) => response.json())
+    .then((posts) => {
+      onSuccess(posts);
+    })
+    .then(showFilters())
+    .catch((error) => { showServerError(error); });
+
+};
+
+getData((posts) => {
+  renderThumbnailsSortDefault(posts);
+  setDefaultSort(debounce(() => renderThumbnailsSortDefault(posts), RERENDER_DELAY));
+  setRandomSort(debounce(() => renderThumbnailsSortRandom(posts), RERENDER_DELAY));
+  setDiscusstSort(debounce(() => renderThumbnailsSortDiscusse(posts), RERENDER_DELAY));
+});
 
