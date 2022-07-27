@@ -66,7 +66,6 @@ imageUploadForm.addEventListener('submit', (evt) => {
   const isValid = pristineValidate.validate();
   if (isValid) {
     const formData = new FormData(evt.target);
-
     fetch(
       'https://26.javascript.pages.academy/kekstagram',
       {
@@ -76,16 +75,14 @@ imageUploadForm.addEventListener('submit', (evt) => {
     )
       .then((response) => {
         if (response.ok) {
-
-          closeUploadPopup();
           clearUploadPopup();
+          closeUploadPopup();
           showSuccesMessage();
         } else {
           showErrorMessage();
         }
       })
       .catch(() => {
-
         showErrorMessage();
       });
   }

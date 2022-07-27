@@ -69,10 +69,12 @@ const setEffect = function (effect) {
 
 const removEffects = function () {
   uploadImage.className = '';
-  effectLevelSlider.noUiSlider.destroy();
-  original = true;
   uploadImage.style.filter = '';
   effectLevel.value = '';
+  if (!original){
+    effectLevelSlider.noUiSlider.destroy();
+  }
+  original = true;
 };
 
 
