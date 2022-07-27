@@ -1,5 +1,3 @@
-
-
 const filtersBlock = document.querySelector('.img-filters ');
 const defaultSortButton = document.querySelector('#filter-default');
 const randomSortButton = document.querySelector('#filter-random');
@@ -29,16 +27,10 @@ const setDiscusstSort = function (cb) {
     cb();
   });
 };
-/*
-defaultSort
-randomSort
-discussedSort
-*/
-
 
 const showFilters = function () {
   filtersBlock.classList.remove('img-filters--inactive');
 };
 
-
 export { showFilters, setDefaultSort, setRandomSort, setDiscusstSort };
+

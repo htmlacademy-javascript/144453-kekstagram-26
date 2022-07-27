@@ -4,12 +4,16 @@ import { isEscapeKey } from './utils.js';
 import { removEffects } from './effects.js';
 import { showErrorMessage, showSuccesMessage } from './upload-messages.js';
 
+
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const imageUploadForm = document.querySelector('#upload-select-image');
 const imageUploadPopap = imageUploadForm.querySelector('.img-upload__overlay');
 const uploadFileInput = document.querySelector('#upload-file');
 const imgUploadCancel = imageUploadForm.querySelector('#upload-cancel');
 const inputHashtag = imageUploadForm.querySelector('.text__hashtags');
 const inputDescription = imageUploadForm.querySelector('.text__description');
+const uploadImageContainer = document.querySelector('.img-upload__preview');
+const uploadImage = uploadImageContainer.querySelector('img');
 
 const onPopupEscKeydown = function (evt) {
   if (isEscapeKey(evt)) {
@@ -18,7 +22,6 @@ const onPopupEscKeydown = function (evt) {
     clearUploadPopup();
   }
 };
-
 
 function closeUploadPopup() {
   imageUploadPopap.classList.add('hidden');
@@ -53,6 +56,12 @@ inputDescription.addEventListener('keydown', (evt) => {
 
 uploadFileInput.addEventListener('change', () => {
   showUploadPopup();
+  const imageFile = uploadFileInput.files[0];
+  const imageFileName = imageFile.name.toLowerCase();
+  const checkType = FILE_TYPES.some((it) => imageFileName.endsWith(it));
+  if (checkType) {
+    uploadImage.src = URL.createObjectURL(imageFile);
+  }
 });
 
 imgUploadCancel.addEventListener('click', () => {
