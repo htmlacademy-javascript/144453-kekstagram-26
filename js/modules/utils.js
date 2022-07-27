@@ -37,4 +37,8 @@ const getRandomUniqueId = function () {
   return currentId;
 };
 
-export {getRandomNumber, checkMessageLength, getRandomArrayElement, getRandomUniqueId};
+function isEscapeKey (evt) {
+  return evt.key === 'Escape';
+}
+
+export {getRandomNumber, checkMessageLength, getRandomArrayElement, getRandomUniqueId,isEscapeKey};

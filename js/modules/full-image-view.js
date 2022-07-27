@@ -1,3 +1,6 @@
+import {isEscapeKey} from './utils.js';
+
+
 const bigPicture = document.querySelector('.big-picture');
 const bigPictuleImage = bigPicture.querySelector('.big-picture__img');
 const bigPictureCloseButton = document.querySelector('#picture-cancel');
@@ -6,11 +9,22 @@ const commentTemplate = commentsBlock.querySelector('.social__comment');
 const comments = document.createDocumentFragment();
 
 
-bigPictureCloseButton.addEventListener ('click', ()=> {
+const onBigPctureEscKeydown = function(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeBigPcturePopup();
+  }
+};
+
+function closeBigPcturePopup() {
+  document.removeEventListener('keydown', onBigPctureEscKeydown);
   bigPicture.classList.add ('hidden');
   document.querySelector('body').classList.remove('modal-open');
-});
+}
 
+bigPictureCloseButton.addEventListener ('click', ()=> {
+  closeBigPcturePopup();
+});
 
 const showBigPicture = function (element, elementContent){
   element.addEventListener('click', (evt)=> {
@@ -34,7 +48,11 @@ const showBigPicture = function (element, elementContent){
     bigPicture.querySelector('.social__comment-count').classList.add('hidden');
     bigPicture.querySelector('.comments-loader').classList.add('hidden');
     document.querySelector('body').classList.add('modal-open');
+
+    document.addEventListener('keydown', onBigPctureEscKeydown);
   });
+
+
 };
 
 export {showBigPicture};

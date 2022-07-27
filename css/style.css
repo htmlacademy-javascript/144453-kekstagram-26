@@ -1414,3 +1414,9 @@ main {
   margin-bottom: 20px;
   text-transform: none;
 }
+
+.server-error {
+  text-align: center;
+  grid-column: 1 / -1;
+  grid-row: 4/5;
+}
