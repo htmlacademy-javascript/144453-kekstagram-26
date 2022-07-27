@@ -1,4 +1,4 @@
-import { renderThumbnailsSortDefault, renderThumbnailsSortRandom, renderThumbnailsSortDiscusse } from './thumbnails.js';
+import { renderThumbnailsSortDefault, renderThumbnailsSortRandom, renderThumbnailsSortDiscusse,renderThumbnails } from './thumbnails.js';
 import { showFilters, setDefaultSort, setRandomSort, setDiscusstSort } from './filters.js';
 import { debounce } from './utils.js';
 
@@ -33,7 +33,7 @@ const getData = function (onSuccess) {
 };
 
 getData((posts) => {
-  renderThumbnailsSortDefault(posts);
+  renderThumbnails(posts);
   setDefaultSort(debounce(() => renderThumbnailsSortDefault(posts), RERENDER_DELAY));
   setRandomSort(debounce(() => renderThumbnailsSortRandom(posts), RERENDER_DELAY));
   setDiscusstSort(debounce(() => renderThumbnailsSortDiscusse(posts), RERENDER_DELAY));
