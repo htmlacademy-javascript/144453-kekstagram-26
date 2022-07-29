@@ -1,30 +1,32 @@
 
-import { showBigPicture } from './full-image-view.js';
-import {compareByCommentsCount, doShuffle } from './utils.js';
+import { openImageFullView } from './full-image-view.js';
+import { compareByCommentsCount, doShuffle } from './utils.js';
 
-const contentPalce = document.querySelector('.pictures');
+const RANDOM_SORT_THUMBNAILS_COUNT = 10;
+
+const contentPlace = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const thumbnails = document.createDocumentFragment();
 
 
-function clearContentPlace(){
+function clearContentPlace() {
   const elements = document.querySelectorAll('.picture');
-  for (let i=0; i<elements.length; i++){
-    contentPalce.removeChild(elements[i]);
-  }
+  elements.forEach((element) => {
+    contentPlace.removeChild(element);
+  });
 }
 
 const renderThumbnails = function (content) {
-  for (let i = 0; i < content.length; i++) {
+  content.forEach((element) => {
     const thumbnail = thumbnailTemplate.cloneNode(true);
-    thumbnail.querySelector('.picture__img').src = content[i].url;
-    thumbnail.href = content[i].url;
-    thumbnail.querySelector('.picture__comments').textContent = content[i].comments.length;
-    thumbnail.querySelector('.picture__likes').textContent = content[i].likes;
-    showBigPicture(thumbnail, content[i]);
+    thumbnail.querySelector('.picture__img').src = element.url;
+    thumbnail.href = element.url;
+    thumbnail.querySelector('.picture__comments').textContent = element.comments.length;
+    thumbnail.querySelector('.picture__likes').textContent = element.likes;
+    openImageFullView(thumbnail, element);
     thumbnails.appendChild(thumbnail);
-  }
-  contentPalce.appendChild(thumbnails);
+  });
+  contentPlace.appendChild(thumbnails);
 };
 
 const renderThumbnailsSortDefault = function (data) {
@@ -37,7 +39,7 @@ const renderThumbnailsSortDefault = function (data) {
 const renderThumbnailsSortRandom = function (data) {
   let content = data.slice();
   doShuffle(content);
-  content = content.slice(0, 10);
+  content = content.slice(0, RANDOM_SORT_THUMBNAILS_COUNT);
   clearContentPlace();
   renderThumbnails(content);
 };
@@ -49,4 +51,4 @@ const renderThumbnailsSortDiscusse = function (data) {
 };
 
 
-export { renderThumbnailsSortDiscusse, renderThumbnailsSortRandom, renderThumbnailsSortDefault,renderThumbnails };
+export { renderThumbnailsSortDiscusse, renderThumbnailsSortRandom, renderThumbnailsSortDefault, renderThumbnails };

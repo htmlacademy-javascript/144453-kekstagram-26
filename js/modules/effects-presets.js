@@ -1,4 +1,4 @@
-const effectsPreset = [
+const effectsPresets = [
   {effect:'chrome',
     filter:'grayscale',
     min:0,
@@ -37,4 +37,4 @@ const effectsPreset = [
 ];
 
 
-export {effectsPreset};
+export {effectsPresets};

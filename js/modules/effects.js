@@ -1,14 +1,16 @@
-import { effectsPreset } from './effects-preset.js';
+import { effectsPresets } from './effects-presets.js';
 
+const effectLevelSliderContainer = document.querySelector('.img-upload__effect-level');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
 const effectsList = document.querySelector('.effects__list');
 const uploadImageContainer = document.querySelector('.img-upload__preview');
 const uploadImage = uploadImageContainer.querySelector('img');
 const effectLevel = document.querySelector('.effect-level__value');
-let original = true;
+let originalEffect = true;
 
 const addSlider = function () {
-  if (original) {
+  effectLevelSliderContainer.classList.remove('hidden');
+  if (originalEffect) {
     noUiSlider.create(effectLevelSlider, {
       range: {
         min: 0,
@@ -16,19 +18,19 @@ const addSlider = function () {
       },
       start: 1,
     });
-    original = false;
+    originalEffect = false;
   }
 };
 
 
 const getSliderOptions = function (effect) {
   let effectIndex = 0;
-  effectsPreset.forEach((value, index) => {
+  effectsPresets.forEach((value, index) => {
     if (value.effect === effect) {
       effectIndex = index;
     }
   });
-  return effectsPreset[effectIndex];
+  return effectsPresets[effectIndex];
 };
 
 
@@ -67,28 +69,29 @@ const setEffect = function (effect) {
   uploadImage.classList.add(`effects__preview--${effect}`);
 };
 
-const removEffects = function () {
+const removeEffects = function () {
   uploadImage.className = '';
   uploadImage.style.filter = '';
   effectLevel.value = '';
-  if (!original) {
+  if (!originalEffect) {
+    effectLevelSliderContainer.classList.add('hidden');
     effectLevelSlider.noUiSlider.destroy();
   }
-  original = true;
+  originalEffect = true;
 };
 
 
-effectsList.addEventListener('change', () => {
+effectsList.addEventListener('change', (() => {
   const effectName = effectsList.querySelector(':checked').value;
 
   if (effectName === 'none') {
-    removEffects();
+    removeEffects();
   } else {
     addSlider();
     setEffect(effectName);
     setSlider(effectName);
   }
 
-});
+}));
 
-export { removEffects };
+export { removeEffects };

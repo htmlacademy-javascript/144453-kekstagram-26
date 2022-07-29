@@ -1,13 +1,14 @@
 import { isEscapeKey } from './utils.js';
 
+const Z_INDEX_ERROR_MESSAGE = 100;
 
 const uploadErrorTemplate = document.querySelector('#error').content.querySelector('.error');
-const uploadSuccesTemplate = document.querySelector('#success').content.querySelector('.success');
+const uploadSuccessTemplate = document.querySelector('#success').content.querySelector('.success');
 const body = document.querySelector('body');
 
 
 const uploadError = document.createDocumentFragment();
-const uploadSucces = document.createDocumentFragment();
+const uploadSuccess = document.createDocumentFragment();
 
 
 const onErrorMessageKeydown = function (evt) {
@@ -32,7 +33,7 @@ function closeErrorMessage() {
 function showErrorMessage() {
   const errorMessage = uploadErrorTemplate.cloneNode(true);
   body.classList.add('modal-open');
-  errorMessage.style.zIndex = 100;
+  errorMessage.style.zIndex = Z_INDEX_ERROR_MESSAGE;
   uploadError.appendChild(errorMessage);
   body.appendChild(uploadError);
 
@@ -62,17 +63,17 @@ function closeSuccessMessage() {
   body.removeEventListener('click', onSuccessMessageClick);
 }
 
-const showSuccesMessage = function () {
-  const succesMessage = uploadSuccesTemplate.cloneNode(true);
+const showSuccessMessage = function () {
+  const successMessage = uploadSuccessTemplate.cloneNode(true);
   body.classList.add('modal-open');
-  uploadSucces.appendChild(succesMessage);
-  body.appendChild(uploadSucces);
+  uploadSuccess.appendChild(successMessage);
+  body.appendChild(uploadSuccess);
 
   document.addEventListener('keydown', onSuccessMessageKeydown);
-  succesMessage.querySelector('.success__button').addEventListener('click', onSuccessMessageClick);
+  successMessage.querySelector('.success__button').addEventListener('click', onSuccessMessageClick);
 
   body.addEventListener('click', onSuccessMessageClick);
-  succesMessage.querySelector('.success__inner').addEventListener('click', (evt) => { evt.stopPropagation(); });
+  successMessage.querySelector('.success__inner').addEventListener('click', (evt) => { evt.stopPropagation(); });
 };
 
-export { showErrorMessage, showSuccesMessage };
+export { showErrorMessage, showSuccessMessage };

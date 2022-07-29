@@ -1,25 +1,3 @@
-function getRandomNumber(min, max) {
-  if (0 <= min && 0 <= max) {
-    return Math.round(Math.random() * (max - min) + min);
-  } else {
-    return 'введите чило больше нуля';
-  }
-}
-
-
-function checkMessageLength(message, maxDuration) {
-  if (message.length <= maxDuration) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-
-function getRandomArrayElement(element) {
-  return element[getRandomNumber(0, element.length - 1)];
-}
-
 function isEscapeKey(evt) {
   return evt.key === 'Escape';
 }
@@ -60,4 +38,4 @@ function doShuffle(array) {
   return array;
 }
 
-export { getRandomNumber, checkMessageLength, getRandomArrayElement, isEscapeKey, debounce, compareByCommentsCount, doShuffle };
+export {  isEscapeKey, debounce, compareByCommentsCount, doShuffle };
