@@ -1,19 +1,22 @@
 import { pristineValidate } from './form-validation.js';
 import { addScaleControl, removeScaleControl } from './upload-image-scale.js';
 import { isEscapeKey } from './utils.js';
-import { removEffects } from './effects.js';
-import { showErrorMessage, showSuccesMessage } from './upload-messages.js';
+import { removeEffects } from './effects.js';
+import { showErrorMessage, showSuccessMessage } from './upload-messages.js';
 
 
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const FILES_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const imageUploadForm = document.querySelector('#upload-select-image');
-const imageUploadPopap = imageUploadForm.querySelector('.img-upload__overlay');
+const imageUploadPopup = imageUploadForm.querySelector('.img-upload__overlay');
 const uploadFileInput = document.querySelector('#upload-file');
-const imgUploadCancel = imageUploadForm.querySelector('#upload-cancel');
-const inputHashtag = imageUploadForm.querySelector('.text__hashtags');
+const imageUploadCancel = imageUploadForm.querySelector('#upload-cancel');
+const inputHashtags = imageUploadForm.querySelector('.text__hashtags');
 const inputDescription = imageUploadForm.querySelector('.text__description');
 const uploadImageContainer = document.querySelector('.img-upload__preview');
 const uploadImage = uploadImageContainer.querySelector('img');
+const formSubmitButton = imageUploadForm.querySelector('.img-upload__submit');
+const originalImageEffect = imageUploadForm.querySelector('#effect-none');
+
 
 const onPopupEscKeydown = function (evt) {
   if (isEscapeKey(evt)) {
@@ -23,29 +26,39 @@ const onPopupEscKeydown = function (evt) {
   }
 };
 
+const disableSubmitButton = function () {
+  formSubmitButton.classList.add('.img-upload__submit--disabled');
+  formSubmitButton.disabled = true;
+};
+const enableSubmitButton = function () {
+  formSubmitButton.classList.remove('.img-upload__submit--disabled');
+  formSubmitButton.disabled = false;
+};
+
 function closeUploadPopup() {
-  imageUploadPopap.classList.add('hidden');
+  imageUploadPopup.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
 }
 
 function clearUploadPopup() {
   removeScaleControl();
-  removEffects();
+  removeEffects();
+  originalImageEffect.checked=true;
   uploadFileInput.value = '';
-  inputHashtag.value = '';
+  inputHashtags.value = '';
   inputDescription.value = '';
 }
 
 function showUploadPopup() {
-  imageUploadPopap.classList.remove('hidden');
+  imageUploadPopup.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', onPopupEscKeydown);
   addScaleControl();
 
 }
 
-inputHashtag.addEventListener('keydown', (evt) => {
+inputHashtags.addEventListener('keydown', (evt) => {
   evt.stopPropagation();
 });
 
@@ -58,13 +71,13 @@ uploadFileInput.addEventListener('change', () => {
   showUploadPopup();
   const imageFile = uploadFileInput.files[0];
   const imageFileName = imageFile.name.toLowerCase();
-  const checkType = FILE_TYPES.some((it) => imageFileName.endsWith(it));
+  const checkType = FILES_TYPES.some((it) => imageFileName.endsWith(it));
   if (checkType) {
     uploadImage.src = URL.createObjectURL(imageFile);
   }
 });
 
-imgUploadCancel.addEventListener('click', () => {
+imageUploadCancel.addEventListener('click', () => {
   closeUploadPopup();
   clearUploadPopup();
 });
@@ -73,7 +86,9 @@ imgUploadCancel.addEventListener('click', () => {
 imageUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristineValidate.validate();
+
   if (isValid) {
+    disableSubmitButton();
     const formData = new FormData(evt.target);
     fetch(
       'https://26.javascript.pages.academy/kekstagram',
@@ -86,13 +101,14 @@ imageUploadForm.addEventListener('submit', (evt) => {
         if (response.ok) {
           clearUploadPopup();
           closeUploadPopup();
-          showSuccesMessage();
+          showSuccessMessage();
         } else {
           showErrorMessage();
         }
       })
       .catch(() => {
         showErrorMessage();
-      });
+      })
+      .finally(enableSubmitButton());
   }
 });

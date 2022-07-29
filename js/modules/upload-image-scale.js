@@ -1,44 +1,46 @@
+const SCALE_STEP_VALUE = 25;
+const SCALE_MAX_VALUE = 100;
+const SCALE_MIN_VALUE = 25;
+
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlValue = document.querySelector('.scale__control--value');
 const uploadImageContainer = document.querySelector('.img-upload__preview');
 const uploadImage = uploadImageContainer.querySelector('img');
-let currentScale = 100;
+let currentScale = SCALE_MAX_VALUE;
 
-const scaleReset = function () {
-  currentScale = 100;
+const resetScale = function () {
+  currentScale = SCALE_MAX_VALUE;
   scaleControlValue.value = `${currentScale}%`;
   uploadImage.style.transform = `scale(${currentScale / 100})`;
 };
 
-const scaleChange = function (step) {
-  if (currentScale <= 100 && 0 <= currentScale) {
-    currentScale = currentScale + step;
-    if (currentScale > 100) { currentScale = 100; }
-    if (currentScale < 20) { currentScale = 25; }
-    scaleControlValue.value = `${currentScale}%`;
-    uploadImage.style.transform = `scale(${currentScale / 100})`;
-  }
+const changeScale = function (step) {
+  currentScale = currentScale + step;
+  if (currentScale > SCALE_MAX_VALUE) { currentScale = SCALE_MAX_VALUE; }
+  if (currentScale < SCALE_MIN_VALUE) { currentScale = SCALE_MIN_VALUE; }
+  scaleControlValue.value = `${currentScale}%`;
+  uploadImage.style.transform = `scale(${currentScale / 100})`;
 };
 
-const scaleUp = function () {
-  scaleChange(25);
+const onScaleUpButtonClick = function () {
+  changeScale(SCALE_STEP_VALUE);
 };
 
-const scaleDown = function () {
-  scaleChange(-25);
+const onScaleDownButtonClick = function () {
+  changeScale(SCALE_STEP_VALUE*(-1));
 };
 
 const addScaleControl = function () {
-  scaleReset();
-  scaleControlBigger.addEventListener('click', scaleUp);
-  scaleControlSmaller.addEventListener('click', scaleDown);
+  resetScale();
+  scaleControlBigger.addEventListener('click', onScaleUpButtonClick);
+  scaleControlSmaller.addEventListener('click', onScaleDownButtonClick);
 };
 
 const removeScaleControl = function () {
-  scaleReset();
-  scaleControlBigger.removeEventListener('click', scaleUp);
-  scaleControlSmaller.removeEventListener('click', scaleDown);
+  resetScale();
+  scaleControlBigger.removeEventListener('click', onScaleUpButtonClick);
+  scaleControlSmaller.removeEventListener('click', onScaleDownButtonClick);
 };
 
 
