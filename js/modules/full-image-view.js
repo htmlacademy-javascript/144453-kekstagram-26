@@ -12,6 +12,8 @@ const comments = document.createDocumentFragment();
 const commentsLoadButton = bigPicture.querySelector('.social__comments-loader');
 const commentsCountLable = bigPicture.querySelector('.social__comment-count');
 let commentsCount = LOAD_COMMENTS_COUNT;
+let onMoreCommentsClick;
+
 
 const onBigPctureEscKeydown = function (evt) {
   if (isEscapeKey(evt)) {
@@ -25,18 +27,19 @@ function closeBigPcturePopup() {
   bigPicture.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
   commentsCount = LOAD_COMMENTS_COUNT;
+  commentsLoadButton.removeEventListener('click', onMoreCommentsClick);
 }
 
 bigPictureCloseButton.addEventListener('click', () => {
   closeBigPcturePopup();
 });
 
-const onMoreCommentsClick = function (commentsArray) {
+const showMoreComments = function (commentsArray) {
   commentsCount += MORE_COMMENTS_COUNT;
   showComments(commentsArray, commentsCount);
 };
 
-function showComments (commentsArray, count) {
+function showComments(commentsArray, count) {
   let commentsListLength = count;
   if (commentsArray.length < count) {
     commentsListLength = commentsArray.length;
@@ -69,7 +72,8 @@ const openImageFullView = function (element, elementContent) {
     evt.preventDefault();
     showBigImage(elementContent);
     showComments(commentsArray, LOAD_COMMENTS_COUNT);
-    commentsLoadButton.addEventListener('click', (() => { onMoreCommentsClick(commentsArray); }));
+    onMoreCommentsClick = (() => showMoreComments(commentsArray));
+    commentsLoadButton.addEventListener('click', onMoreCommentsClick);
     document.querySelector('body').classList.add('modal-open');
     document.addEventListener('keydown', onBigPctureEscKeydown);
   });
